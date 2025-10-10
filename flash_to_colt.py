@@ -147,7 +147,7 @@ def prep_yaml_files(output_hdf5_file, yaml_config_file='config-ionpre.yaml', out
         new_Z_line = f'metallicity: {Zgas}     # Gas metallicity (default: 0.0134; solar)'
         content = re.sub(Z_pattern, new_Z_line, content, flags=re.MULTILINE)
 
-        output_hdf5_dir = os.path.relpath(output_hdf5_file) # Directory of the HDF5 file
+        output_hdf5_dir = os.path.relpath(os.path.dirname(output_hdf5_file)) # Directory of the HDF5 file
 
         init_dir_pattern = r'^(\s*init_dir:\s*).*(\s*#.*)?$'
         new_init_dir_line = f'init_dir: {output_hdf5_dir}     # Directory containing initial conditions file'
