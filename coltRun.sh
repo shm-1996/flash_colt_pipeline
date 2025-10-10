@@ -16,6 +16,11 @@ if [ ! -d "$code_path" ]; then
 fi
 
 run_path=$(realpath ".")  # Set path to COLT test directory
+# Get the real directory of this script (resolves symlinks)
+SCRIPT_REAL_PATH=$(readlink -f "$0")
+SCRIPT_REAL_DIR=$(dirname "$SCRIPT_REAL_PATH")
+cp "$SCRIPT_REAL_DIR/defines.yaml" $run_path/defines.yaml
+#Set options for make
 opts="DEFS=$run_path/defines.yaml BUILD=$run_path/build EXE=$run_path/colt"
 
 if [ ! -f "./colt" ]; then
