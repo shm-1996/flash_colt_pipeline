@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 #################################################################
 #Convert FLASH AMR output to COLT format and modify yaml files
 #Author: Shyam Menon (CCA/Rutgers, 2025)
