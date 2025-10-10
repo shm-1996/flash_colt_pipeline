@@ -50,10 +50,10 @@ fi
 # Run the Python script with the provided arguments
 if [ $# -eq 2 ]; then
     # If output file is specified
-    python flash_to_colt.py "$input_file" -o "$output_file"
+    flash_to_colt.py "$input_file" -o "$output_file"
 else
     # Use default output file
-    python flash_to_colt.py "$input_file"
+    flash_to_colt.py "$input_file"
 
 fi
 
