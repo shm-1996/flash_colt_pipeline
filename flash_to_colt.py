@@ -57,7 +57,7 @@ def convert_flash_to_colt(File, output_file='colt.hdf5'):
         print(f"Creating output directory for colt outputs: {output_dir}")
         os.makedirs(output_dir)
 
-    output_file = output_file.append(f'_{snapshot_number_str}.hdf5')
+    output_file = output_file + f'_{snapshot_number_str}.hdf5'
     output_file = output_dir + '/' + output_file
 
     #Read in metallicities
@@ -185,7 +185,7 @@ def main():
     output_hdf5_file, dusttogasratio, Zgas = convert_flash_to_colt(args.File, args.output)
 
     # Get the directory where the script is located
-    script_dir = os.path.dirname(os.path.abspath(__file__))
+    script_dir = os.path.dirname(os.path.realpath(__file__))
 
     yaml_files = glob.glob(os.path.join(script_dir, "config-*.yaml"))
     
