@@ -10,7 +10,7 @@ abundances_base: states       # Read in abundances from this file
 
 recombinations: true          # Include recombination emission
 T_floor_rec: 7000             # Apply a recombination temperature floor [K]
-dust_model: ~/colt/tables/SMC_WeingartnerDraine.hdf5
+dust_model: /mnt/home/smenon/colt/tables/SMC_WeingartnerDraine.hdf5
 line: Balmer-beta            # Name of the line (default "Lyman-alpha")
 v_turb_kms: 10                # Microturbulent velocity [km/s]
 output_proj_emission: true    # Output intrinsic emission without transport (proj)

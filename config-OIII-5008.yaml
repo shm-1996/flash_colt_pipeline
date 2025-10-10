@@ -11,7 +11,7 @@ abundances_base: states       # Read in abundances from this file
 recombinations: true          # Include recombination emission
 T_floor_rec: 7000             # Apply a recombination temperature floor [K]
 collisions: true              # Include collisional excitation
-dust_model: ~/colt/tables/SMC_WeingartnerDraine.hdf5
+dust_model: /mnt/home/smenon/colt/tables/SMC_WeingartnerDraine.hdf5
 dust_to_gas: 0.0081        # Dust-to-gas ratio (default: 0.0081; solar neighborhood)
 metallicity: 0.0134          # Metallicity (default: 0.0134; solar)
 line: OIII-5008             # Name of the line (default "Lyman-alpha")
