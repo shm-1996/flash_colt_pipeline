@@ -57,6 +57,10 @@ else
 
 fi
 
+#Extract the snapshot number from the input file name (e.g. plt_cnt_0000 -> 0000)
+snapshot_number_str=$(basename "$input_file" | sed -E 's/.*_([0-9]{4})$/\1/')
+snapshot_number_int=$((10#$snapshot_number_str))
+
 call="mpirun --mca opal_warn_on_missing_libcuda 0 --mca btl ^openib --mca psm2 ucx -np 1 --bind-to none"
 colt="./colt"
 
@@ -64,8 +68,8 @@ run() {
     for suffix in "$@"; do
         config_file="config-${suffix}.yaml"
         echo "Running simulation with ${config_file} ..."
-        $call $colt $config_file
+        $call $colt $config_file $snapshot_number_int
     done
 }
 
-# run ionpre7 ionpre8 Ha Hb OII-3727 OIII-5008
+run ionpre7 ionpre8 Ha Hb OII-3727 OIII-5008
