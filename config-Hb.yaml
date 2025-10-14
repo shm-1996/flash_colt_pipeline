@@ -5,7 +5,7 @@ init_dir: colt     # Directory containing initial conditions file
 init_base: colt     # Initial conditions basename
 snap_padding: 4        # Zero padding for snapshot number
 output_dir: colt            # Output directory name
-output_base: OIII-5008             # Output file base name
+output_base: Hbeta           # Output file base name
 abundances_base: states       # Read in abundances from this file
 
 recombinations: true          # Include recombination emission
