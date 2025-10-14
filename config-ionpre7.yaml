@@ -35,6 +35,7 @@ n_photons: 10000000          # Number of photon packets
 j_exp: 0.75                   # Luminosity boosting exponent
 max_iter: 20                   # Maximum number of iterations
 max_error: 0.01              # Relative error for convergence
+charge_exchange: true         # Include charge exchange reactions
 
 output_photons: false         # Output escaped photon packets
 #spherical_escape: true        # Photons escape from a sphere
