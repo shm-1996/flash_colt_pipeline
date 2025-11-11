@@ -51,3 +51,4 @@ cameras:                      # Add camera directions manually
 output_freq_stds: true        # Output frequency standard deviations (default: false)
 output_freq2_images: true     # Frequency moment images (default: false)
 verbose: true                 # Verbose output
+output_cells: true #output emission from each cell
