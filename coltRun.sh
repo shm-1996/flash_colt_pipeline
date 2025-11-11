@@ -77,4 +77,7 @@ run() {
     done
 }
 
-run ionpre7 ionpre8 Ha Hb OII-3727 OIII-5008
+run ionpre7 ionpre8 Ha Hb OIII-5008 NII-6585 OIII-4364 SII-6718 SII-6733 NIII-1747 NIV-1486 CIII-1907 CIV-1548
+
+#Plotting
+colt_analysis.py -file $input_file
