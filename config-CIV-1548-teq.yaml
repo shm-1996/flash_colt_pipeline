@@ -1,0 +1,57 @@
+# COLT config file
+#This is used to solve for ionization equilibrium
+--- !mcrt               # MCRT ionization equilibrium module
+init_dir: colt     # Directory containing initial conditions file
+init_base: colt     # Initial conditions basename
+snap_padding: 4        # Zero padding for snapshot number
+output_dir: colt            # Output directory name
+output_base: CIV-1548             # Output file base name
+abundances_base: states-teq       # Read in abundances from this file
+data_dir: /mnt/home/smenon/colt/tables # Path to CHIANTI data tables
+
+recombinations: true          # Include recombination emission
+T_floor_rec: 7000             # Apply a recombination temperature floor [K]
+collisions: true              # Include collisional excitation
+solver_based_emission: true   # Use emission based on solving the level populations
+dust_model: /mnt/home/smenon/colt/tables/SMC_WeingartnerDraine.hdf5
+dust_to_gas: 0.0081        # Dust-to-gas ratio (default: 0.0081; solar neighborhood)
+metallicity: 0.0134          # Metallicity (default: 0.0134; solar)
+line: CIV-1548-1550             # Name of the line (default "Lyman-alpha")
+v_turb_kms: 10                # Microturbulent velocity [km/s]
+output_proj_emission: true    # Output intrinsic emission without transport (proj)
+
+# Information about sources
+n_photons: 10000000          # Number of photon packets
+j_exp: 0.75                   # Luminosity boosting exponent
+# max_iter: 20                   # Maximum number of iterations
+# max_error: 0.01              # Relative error for convergence
+
+output_photons: false         # Output escaped photon packets
+output_cells: true            # Output emission from each cell
+#spherical_escape: true        # Photons escape from a sphere
+#escape_radius_bbox: 0.9       # Escape radius relative to the bbox
+#emission_radius_bbox: 0.75    # Emission radius relative to the bbox
+# output_abundances: true      # Output abundances (x_HI etc)
+# output_photoheating: true     # Output photoheating rates
+
+freq_min: -500                # Frequency minimum [km/s]
+freq_max: 500                 # Frequency maximum [km/s]
+n_bins: 500                   # Number of frequency bins
+#image_radius_bbox: 0.5        # Image radius relative to the bbox (1 Rvir)
+n_pixels: 512                 # Number of image pixels
+# n_exp: 0                      # Camera healpix directions exponent
+cameras:                      # Add camera directions manually
+  - [0,0,1]
+  - [0,0,-1]
+  - [0,1,0]
+  - [0,-1,0]
+  - [1,0,0]
+  - [-1,0,0]
+#output_escape_fractions: true # Output camera escape fractions
+#output_bin_escape_fractions: true # Output bin escape fractions
+#output_images: true           # Output surface brightness images
+#output_mcrt_emission: true    # Output intrinsic emission without transport (mcrt)
+#output_cubes: true            # Surface brightness cubes (defualt: false)
+output_freq_stds: true        # Output frequency standard deviations (default: false)
+output_freq2_images: true     # Frequency moment images (default: false)
+verbose: true                 # Verbose output
