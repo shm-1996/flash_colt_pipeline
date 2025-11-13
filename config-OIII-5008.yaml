@@ -17,6 +17,7 @@ metallicity: 0.0134          # Metallicity (default: 0.0134; solar)
 line: OIII-5008             # Name of the line (default "Lyman-alpha")
 v_turb_kms: 10                # Microturbulent velocity [km/s]
 output_proj_emission: true    # Output intrinsic emission without transport (proj)
+output_cells: true            # Output emission from each cell
 
 # Information about sources
 n_photons: 10000000          # Number of photon packets
@@ -52,4 +53,3 @@ cameras:                      # Add camera directions manually
 output_freq_stds: true        # Output frequency standard deviations (default: false)
 output_freq2_images: true     # Frequency moment images (default: false)
 verbose: true                 # Verbose output
-output_cells: true #output emission from each cell

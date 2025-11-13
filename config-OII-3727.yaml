@@ -10,6 +10,7 @@ output_base: OII-3727             # Output file base name
 abundances_base: states       # Read in abundances from this file
 
 collisions: true              # Include collisional excitation
+recombinations: true          # Include recombination emission
 #collisions_limiter: 10        # Limited by photoheating rate
 dust_model: /mnt/home/smenon/colt/tables/SMC_WeingartnerDraine.hdf5
 dust_to_gas: 0.0081        # Dust-to-gas ratio (default: 0.0081; solar neighborhood)
@@ -17,6 +18,7 @@ metallicity: 0.0134          # Metallicity (default: 0.0134; solar)
 line: OII-3727-3730            # Name of the line (default "Lyman-alpha")
 v_turb_kms: 10                # Microturbulent velocity [km/s]
 output_proj_emission: true    # Output intrinsic emission without transport (proj)
+output_cells: true            # Output emission from each cell
 
 # Information about sources
 n_photons: 10000000          # Number of photon packets
@@ -52,4 +54,3 @@ cameras:                      # Add camera directions manually
 output_freq_stds: true        # Output frequency standard deviations (default: false)
 output_freq2_images: true     # Frequency moment images (default: false)
 verbose: true                 # Verbose output
-output_cells: true #output emission from each cell
