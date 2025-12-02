@@ -13,13 +13,13 @@ import cmasher as cm
 import os
 import argparse
 
-def emission_maps(file):
+def emission_maps(file,teq=False):
     from matplotlib.colors import LogNorm
 
-    fig,axs = plt.subplots(2,2,figsize=(10.8,9.6),tight_layout=True)
-    lines = ["Haproj","Hbeta","NII-6585","OIII-5008"]
-    labels = [r"${\rm H}\alpha$",r"${\rm H}\beta$",r"[NII] 6585\AA",r"[OIII] 5008\AA"]
-    colorbars = [cm.lavender_r, cm.amber,cm.flamingo_r, cm.gem]
+    fig,axs = plt.subplots(2,3,figsize=(16.2,9.6),tight_layout=True)
+    lines = ["Haproj","Hbeta","NII-6585","OIII-5008","OIII-4364","NIV-1486"]
+    labels = [r"${\rm H}\alpha$",r"${\rm H}\beta$",r"[NII] 6585\AA",r"[OIII] 5008\AA",r"[OIII] 4364\AA",r"[NIV] 1486\AA"]
+    colorbars = [cm.lavender_r, cm.amber,cm.flamingo_r, cm.dusk, cm.toxic, cm.ghostlight]
 
     baseDirectory = os.path.dirname(os.path.abspath(file))
     fileNo = int(os.path.basename(file).split('_')[-1].split('.')[0])
@@ -32,27 +32,32 @@ def emission_maps(file):
         file = baseDirectory + f'/colt_dir/{line}_{fileNo:04d}.hdf5'
         f = h5py.File(file, 'r')
         data = f['images'][:]
-        ax = axs[i//2,i%2]
+        ax = axs[i//3,i%3]
 
         image_data = data[0]
         
         # Use LogNorm for log scaling instead of manually taking log10
         im = ax.imshow(image_data, norm=LogNorm(vmin=image_data.max()/1.e5,vmax=image_data.max()),cmap=colorbars[i],origin='lower',extent=extent)
         cbar = fig.colorbar(im, ax=ax)
-        cbar.set_label(labels[i] + r'$\, (\rm erg s ^{-1} cm^{-2}$')
+        cbar.set_label(labels[i] + r'$\, (\rm erg s ^{-1})$')
 
     axs[1,0].set_xlabel(r'$x \, (\rm pc)$')
     axs[1,1].set_xlabel(r'$x \, (\rm pc)$')
+    axs[1,2].set_xlabel(r'$x \, (\rm pc)$')
     axs[0,0].set_ylabel(r'$y \, (\rm pc)$')
     axs[1,0].set_ylabel(r'$y \, (\rm pc)$')
+
     fig.savefig(baseDirectory + f'/colt_emission_maps_{fileNo:04d}.pdf',bbox_inches='tight')
 
-def ionization_state_maps(file):
+def ionization_state_maps(file,teq=False):
 
     baseDirectory = os.path.dirname(os.path.abspath(file))
     fileNo = int(os.path.basename(file).split('_')[-1].split('.')[0])
 
-    states_file = f'{baseDirectory}/colt_dir/states_{fileNo:04d}.hdf5'
+    if(teq is True):
+        states_file = f'{baseDirectory}/colt_dir/states-teq_{fileNo:04d}.hdf5'
+    else:
+        states_file = f'{baseDirectory}/colt_dir/states_{fileNo:04d}.hdf5'
     f = h5py.File(states_file, 'r')
     basefile = f'{baseDirectory}/colt_dir/colt_{fileNo:04d}.hdf5'
     bf = h5py.File(basefile, 'r')
@@ -109,15 +114,22 @@ def ionization_state_maps(file):
     label_plot = r'$x_{\rm i}$'
     cbar.ax.set_ylabel(label_plot,rotation=90,
                 labelpad=-10,fontsize=24)
+    
+    if(teq is True):
+        outFilename = baseDirectory + f'/colt_ion_states-teq_{fileNo:04d}.pdf'
+    else:
+        outFilename = baseDirectory + f'/colt_ion_states_{fileNo:04d}.pdf'
 
-    fig.savefig(baseDirectory + f'/colt_ion_states_{fileNo:04d}.pdf',bbox_inches='tight')
+    fig.savefig(outFilename,bbox_inches='tight')
 
-def ionization_phase_diagrams(file):
+def ionization_phase_diagrams(file,teq=False):
 
     baseDirectory = os.path.dirname(os.path.abspath(file))
     fileNo = int(os.path.basename(file).split('_')[-1].split('.')[0])
-
-    states_file = f'{baseDirectory}/colt_dir/states_{fileNo:04d}.hdf5'
+    if(teq is True):
+        states_file = f'{baseDirectory}/colt_dir/states-teq_{fileNo:04d}.hdf5'
+    else:
+        states_file = f'{baseDirectory}/colt_dir/states_{fileNo:04d}.hdf5'
     f = h5py.File(states_file, 'r')
 
     # Load Flash simulation data for density and temperature
@@ -217,16 +229,21 @@ def ionization_phase_diagrams(file):
     label_plot = r'$x_{\rm i}$'
     cbar.ax.set_ylabel(label_plot, rotation=90, labelpad=-10, fontsize=24)
 
-    fig.savefig(baseDirectory + f'/colt_ionphase_{fileNo:04d}.pdf',bbox_inches='tight')
+    if(teq is True):
+        outFilename = baseDirectory + f'/colt_ionphase-teq_{fileNo:04d}.pdf'
+    else:
+        outFilename = baseDirectory + f'/colt_ionphase_{fileNo:04d}.pdf'
+    fig.savefig(outFilename,bbox_inches='tight')
 
     plt.show()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Plots/analysis for COLT outputs.')
     parser.add_argument("-file", type=str, nargs="*", help='Path to the FLASH pltfile for which COLT has produced outputs.')
+    parser.add_argument("-teq",action='store_true', help='If set, uses the temperature equilibrium version files.')
     args = parser.parse_args()
     files = args.file
     for file in files:
-        emission_maps(file)
-        ionization_state_maps(file)
-        ionization_phase_diagrams(file)
+        emission_maps(file,teq=args.teq)
+        ionization_state_maps(file,teq=args.teq)
+        ionization_phase_diagrams(file,teq=args.teq)
