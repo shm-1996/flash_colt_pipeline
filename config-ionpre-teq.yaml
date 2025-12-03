@@ -6,7 +6,7 @@ init_dir: colt     # Directory containing initial conditions file
 init_base: colt     # Initial conditions basename
 snap_padding: 4        # Zero padding for snapshot number
 output_dir: colt            # Output directory name
-output_base: ion-eq-pre7-teq  # Output file base name
+output_base: ion-eq-pre-teq  # Output file base name
 abundances_base: colt   # Read in abundances from this file
 abundances_output_base: states-teq # Output abundances to this file
 data_dir: /mnt/home/smenon/colt/tables
