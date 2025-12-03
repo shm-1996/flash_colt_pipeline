@@ -1,0 +1,53 @@
+# COLT config file
+#This is used to solve for ionization equilibrium
+--- !ionization               # MCRT ionization equilibrium module
+
+init_dir: colt     # Directory containing initial conditions file
+init_base: colt     # Initial conditions basename
+snap_padding: 4        # Zero padding for snapshot number
+output_dir: colt            # Output directory name
+output_base: ion-eq-pre7-teq  # Output file base name
+abundances_base: colt   # Read in abundances from this file
+abundances_output_base: states-teq # Output abundances to this file
+data_dir: /mnt/home/smenon/colt/tables
+
+source_file_Z_age: /mnt/home/smenon/colt/tables/bpass-spectra-bin-imf_chab100.hdf5
+dust_model: /mnt/home/smenon/colt/tables/SMC_WeingartnerDraine.hdf5
+dust_to_gas: 0.0081        # Dust-to-gas ratio (default: 0.0081; solar neighborhood)
+metallicity: 0.0134          # Metallicity (default: 0.0134; solar)
+metal_ions: true              # Include all metal ions
+ion_bins: true                # Include all active ion bins
+j_exp: 0.75                   # Luminosity boosting exponent
+nu_exp: 2                     # Frequency boosting exponent
+HI_bias: 5                    # Sampling bias for HI photons (> 13.6 eV)
+max_bin_dex: 0.05             # Minimum frequency bin width in dex
+#Note: the below parameter has been discontinued in favor of the one above for more recent versions (Nov 2025)
+#min_HI_bin_cdf: 0.8           # Minimum CDF value for >= 13.6 eV bins
+
+
+# Note: ionpre7 and ionpre8 have been discontinued in favor of an adaptive approach in more recent versions (Nov 2025)
+n_photons: 100000000          # Number of photon packets (10^8)
+max_iter: 100                   # Maximum number of iterations
+max_error: 0.001              # Relative error for convergence
+precondition: 10              # Pre-conditioning factor
+charge_exchange: true         # Include charge exchange reactions
+
+# Thermal solutions
+output_cooling: true          # Output radiative cooling rates
+output_heating: true          # Output radiative heating rates
+output_dT_dt: true            # Output cooling times
+use_temperature_equilibrium: true  # Use temperature equilibrium
+# max_cooling_time_yr: 1000000.   # Limit temperature equilibrium
+courant_limited_cooling: true  # Courant limited cooling
+use_internal_energy: false    # Use internal energy
+T_rtol: 0.001
+T_stab_factor: 2
+T_floor: 300                 # Temperature floor [K]
+
+output_photons: false         # Output escaped photon packets
+output_iterations: true       # Output ionization data after each iteration (useful for restarts)
+#spherical_escape: true        # Photons escape from a sphere
+#escape_radius_bbox: 0.9       # Escape radius relative to the bbox
+#emission_radius_bbox: 0.75    # Emission radius relative to the bbox
+output_abundances: true      # Output abundances (x_HI etc)
+output_photoheating: true     # Output photoheating rates
