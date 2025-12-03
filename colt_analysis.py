@@ -17,7 +17,7 @@ def emission_maps(file,teq=False):
     from matplotlib.colors import LogNorm
 
     fig,axs = plt.subplots(2,3,figsize=(16.2,9.6),tight_layout=True)
-    lines = ["Haproj","Hbeta","NII-6585","OIII-5008","OIII-4364","NIV-1486"]
+    lines = ["Halpha","Hbeta","NII-6585","OIII-5008","OIII-4364","NIV-1486"]
     labels = [r"${\rm H}\alpha$",r"${\rm H}\beta$",r"[NII] 6585\AA",r"[OIII] 5008\AA",r"[OIII] 4364\AA",r"[NIV] 1486\AA"]
     colorbars = [cm.lavender_r, cm.amber,cm.flamingo_r, cm.dusk, cm.toxic, cm.ghostlight]
 
