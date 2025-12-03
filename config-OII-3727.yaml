@@ -10,8 +10,7 @@ output_base: OII-3727             # Output file base name
 abundances_base: states       # Read in abundances from this file
 
 collisions: true              # Include collisional excitation
-recombinations: true          # Include recombination emission
-solver_based_emission: true   # Use emission based on solving the level populations
+recombinations: false          # Include recombination emission
 #collisions_limiter: 10        # Limited by photoheating rate
 dust_model: /mnt/home/smenon/colt/tables/SMC_WeingartnerDraine.hdf5
 dust_to_gas: 0.0081        # Dust-to-gas ratio (default: 0.0081; solar neighborhood)
