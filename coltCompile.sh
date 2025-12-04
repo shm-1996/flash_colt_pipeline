@@ -25,3 +25,10 @@ opts="DEFS=$run_path/defines.yaml BUILD=$run_path/build EXE=$run_path/colt"
 
 make clean_exe $opts -C $code_path
 make -j $opts -C $code_path
+
+#Lyalpha compilation
+cp "$SCRIPT_REAL_DIR/defines_Lya.yaml" $run_path/defines_Lya.yaml
+#Set options for make
+opts="DEFS=$run_path/defines_Lya.yaml BUILD=$run_path/build EXE=$run_path/colt_Lya"
+make clean_exe $opts -C $code_path
+make -j $opts -C $code_path

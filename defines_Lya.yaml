@@ -1,0 +1,12 @@
+GEOMETRY: cartesian
+
+# dynamical_core_skipping: true        # Turn on dynamical core skipping
+x_crit: 1                            # Constant core skipping value (start with 3 then go to 1)
+# x_core: 0.7                          # Draw u_par with Gaussian accept/reject below this frequency
+# x_wing: 8                            # Draw u_par from a modified Gaussian above this frequency
+
+# --- Radiation Properties ---
+output_energy_density: true          # Activate radiation energy density output
+# output_acceleration: true            # Activate radiation acceleration output (path-based)
+output_acceleration_scat: true       # Activate radiation acceleration output (scattering-based)
+# output_pressure: true                # Activate radiation pressure output (radial, spherical only)
