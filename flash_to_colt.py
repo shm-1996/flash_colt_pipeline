@@ -19,7 +19,7 @@ Zsun = 0.0134 # Solar metallicity (Asplund+2009)
 d2g_sun = 0.0081 # Dust-to-gas ratio in the solar neighborhood (Weingartner & Draine 2001)
 
 
-def convert_flash_to_colt(File, output_file='colt.hdf5'):
+def convert_flash_to_colt(File, output_file='colt'):
     """
     Convert FLASH AMR output to COLT format
     
@@ -27,27 +27,6 @@ def convert_flash_to_colt(File, output_file='colt.hdf5'):
         File (str): Path to the FLASH plt file
         output_file (str): Output HDF5 file path
     """
-
-    ds = yt.load(File)
-
-    #Check if inputFilename is chkFile (i.e. contains in it _hdf5_chk_)
-    if '_hdf5_chk_' in File:
-        print("Input file appears to be a checkpoint file (_hdf5_chk_ found in filename).")
-        pf = ds
-    else:
-        # Derive particle file name from plt file name
-        partFile = File.replace('plt_cnt', 'part')
-        pf = yt.load(partFile)
-    
-    # ad = ds.all_data()
-
-    #Cartesian version
-    #Get the maximum level (grid resolution)
-    max_resolution = (2**ds.max_level) * ds.domain_dimensions
-    cg = ds.covering_grid(level=ds.max_level,left_edge=ds.domain_left_edge, dims=max_resolution)
-    mH = 1.6735575e-24 # Mass of hydrogen
-    mH2 = 2.0*mH
-    me = 9.10938356e-28 # Mass of electron
 
     #Get snapshot number of file
     snapshot_number_str = File.split('_')[-1]  # e.g., plt_cnt_0000 -> 0000
@@ -60,11 +39,29 @@ def convert_flash_to_colt(File, output_file='colt.hdf5'):
     output_file = output_file + f'_{snapshot_number_str}.hdf5'
     output_file = output_dir + '/' + output_file
 
+    ds = yt.load(File)
     #Read in metallicities
     Zgas, dusttogasratio = ds.parameters['krome_metallicity'],ds.parameters['dusttogasratio']
     #Convert from solar-scaled to mass fractions
     Zgas = Zgas * Zsun
     dusttogasratio = dusttogasratio * d2g_sun
+
+    #Check if inputFilename is chkFile (i.e. contains in it _hdf5_chk_)
+    if '_hdf5_chk_' in File:
+        print("Input file appears to be a checkpoint file (_hdf5_chk_ found in filename).")
+        pf = ds
+    else:
+        # Derive particle file name from plt file name
+        partFile = File.replace('plt_cnt', 'part')
+        pf = yt.load(partFile)
+    
+    #Cartesian version
+    #Get the maximum level (grid resolution)
+    max_resolution = (2**ds.max_level) * ds.domain_dimensions
+    cg = ds.covering_grid(level=ds.max_level,left_edge=ds.domain_left_edge, dims=max_resolution)
+    mH = 1.6735575e-24 # Mass of hydrogen
+    mH2 = 2.0*mH
+    me = 9.10938356e-28 # Mass of electron
 
     with h5py.File(output_file,'w') as f:
         f.attrs['time'] = np.float64(ds.current_time.to('s'))  # Current simulation time
@@ -178,8 +175,17 @@ def main():
     parser = argparse.ArgumentParser(description='Convert FLASH AMR output to COLT format')
     parser.add_argument('File', help='Path to the FLASH plt file of format *_hdf5_plt_cnt_{snapshot}')
     parser.add_argument('-o', '--output', default='colt', help='Output HDF5 file path (default: colt_{snapshot})')
+    parser.add_argument('-overwrite', action='store_true', help='Overwrite existing output files if they exist')
 
     args = parser.parse_args()
+
+    #Get snapshot number of file
+    snapshot_number_str = args.File.split('_')[-1]  # e.g., plt_cnt_0000 -> 0000
+
+    output_file_name = args.output+'_dir' + '/' + args.output + f'_{snapshot_number_str}.hdf5'
+    if os.path.exists(output_file_name) and not args.overwrite:
+        print(f"Output file {output_file_name} already exists. Use -overwrite to overwrite existing files.")
+        return
     
     # Convert FLASH to COLT format
     output_hdf5_file, dusttogasratio, Zgas = convert_flash_to_colt(args.File, args.output)
