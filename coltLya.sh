@@ -15,12 +15,22 @@ fi
 teq_flag=false
 input_file=""
 output_file=""
+num_cores=1
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
     case $1 in
         --teq)
             teq_flag=true
+            shift
+            ;;
+        --np)
+            shift
+            num_cores="$1"
+            if [[ ! "$num_cores" =~ ^[1-9][0-9]*$ ]]; then
+                echo "Error: --np must be a positive integer"
+                exit 1
+            fi
             shift
             ;;
         -*)
@@ -45,7 +55,7 @@ done
 snapshot_number_str=$(basename "$input_file" | sed -E 's/.*_([0-9]{4})$/\1/')
 snapshot_number_int=$((10#$snapshot_number_str))
 
-call="mpirun --mca opal_warn_on_missing_libcuda 0 --mca btl ^openib --mca psm2 ucx -np 1 --bind-to none"
+call="mpirun --mca opal_warn_on_missing_libcuda 0 --mca btl ^openib --mca psm2 ucx -np $num_cores --bind-to none"
 colt="./colt_Lya"
 
 if [ "$teq_flag" = true ]; then

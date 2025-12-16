@@ -25,9 +25,9 @@ v_turb_kms: 10                # Microturbulent velocity [km/s]
 
 
 # Information about sources
-n_photons: 10000              # Number of photon packets (10^4)
+#n_photons: 10000              # Number of photon packets (10^4)
 # n_photons: 100000             # Number of photon packets (10^5)
-# n_photons: 1000000            # Number of photon packets (10^6)
+n_photons: 1000000            # Number of photon packets (10^6)
 j_exp: 0.75                   # Luminosity boosting exponent
 # max_iter: 20                   # Maximum number of iterations
 # max_error: 0.01              # Relative error for convergence
