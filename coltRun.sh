@@ -15,12 +15,22 @@ fi
 teq_flag=false
 input_file=""
 output_file=""
+num_cores=1
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
     case $1 in
         --teq)
             teq_flag=true
+            shift
+            ;;
+        --np)
+            shift
+            num_cores="$1"
+            if [[ ! "$num_cores" =~ ^[1-9][0-9]*$ ]]; then
+                echo "Error: --np must be a positive integer"
+                exit 1
+            fi
             shift
             ;;
         -*)
@@ -43,9 +53,10 @@ done
 
 # Check if an input file is provided
 if [ -z "$input_file" ]; then
-    echo "Usage: $0 <input_file> [--teq] [output_file]"
+    echo "Usage: $0 <input_file> [--teq] [--np <cores>] [output_file]"
     echo "  input_file:  Path to the FLASH plt or chk file"
     echo "  --teq:       Use teq versions of ionpre7 and ionpre8 configs"
+    echo "  --np:        Number of cores to use (default: 1)"
     echo "  output_file: Optional output HDF5 file (default: colt.hdf5)"
     exit 1
 fi
@@ -69,7 +80,7 @@ fi
 snapshot_number_str=$(basename "$input_file" | sed -E 's/.*_([0-9]{4})$/\1/')
 snapshot_number_int=$((10#$snapshot_number_str))
 
-call="mpirun --mca opal_warn_on_missing_libcuda 0 --mca btl ^openib --mca psm2 ucx -np 1 --bind-to none"
+call="mpirun --mca opal_warn_on_missing_libcuda 0 --mca btl ^openib --mca psm2 ucx -np $num_cores --bind-to none"
 colt="./colt"
 
 if [ "$teq_flag" = true ]; then
