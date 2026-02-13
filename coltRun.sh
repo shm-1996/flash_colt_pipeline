@@ -103,8 +103,7 @@ run() {
     done
 }
 
-run ionpre Ha Hb OIII-5008 NII-6585 OIII-4364 SII-6718 SII-6733 NIV-1486 
-#OII-3727 and NIII-1747 and CIII-1907-1909, and CIV-1548 doublets not working atm
+run ionpre Ha Hb OIII-5008 NII-6585 OIII-4364 SII-6718 SII-6733 NIV-1486 OII-3727 NIII-1747 CIII-1907 CIV-1548
 
 #Plotting
 if [ "$teq_flag" = true ]; then
