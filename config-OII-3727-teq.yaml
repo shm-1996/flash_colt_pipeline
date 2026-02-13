@@ -11,7 +11,7 @@ abundances_base: states-teq       # Read in abundances from this file
 data_dir: /mnt/home/smenon/colt/tables # Path to CHIANTI data tables
 
 collisions: true              # Include collisional excitation
-recombinations: true          # Include recombination emission
+recombinations: false          # Include recombination emission
 use_temperature_equilibrium: true # Use temperature equilibrium
 solver_based_emission: true   # Use emission based on solving the level populations
 #collisions_limiter: 10        # Limited by photoheating rate
