@@ -38,7 +38,8 @@ output_heating: true          # Output radiative heating rates
 output_dT_dt: true            # Output cooling times
 use_temperature_equilibrium: true  # Use temperature equilibrium
 # max_cooling_time_yr: 1000000.   # Limit temperature equilibrium
-courant_limited_cooling: true  # Courant limited cooling
+# courant_limited_cooling requires a dT_dt field (K/s) in the COLT initial conditions or states file;
+courant_limited_cooling: false  # Courant limited cooling
 use_internal_energy: false    # Use internal energy
 T_rtol: 0.001
 T_stab_factor: 2

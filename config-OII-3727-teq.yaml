@@ -12,7 +12,7 @@ data_dir: /mnt/home/smenon/colt/tables # Path to CHIANTI data tables
 
 collisions: true              # Include collisional excitation
 recombinations: false          # Include recombination emission
-use_temperature_equilibrium: true # Use temperature equilibrium
+use_Teq: true                 # Read saved T_eq from the states file (use_temperature_equilibrium is ionization-module only)
 solver_based_emission: true   # Use emission based on solving the level populations
 #collisions_limiter: 10        # Limited by photoheating rate
 dust_model: /mnt/home/smenon/colt/tables/SMC_WeingartnerDraine.hdf5
